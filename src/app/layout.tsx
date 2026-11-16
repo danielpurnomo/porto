@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Daniel Purnomo — Fullstack & AI Engineer",
+  title: "Daniel Purnomo Portofolio",
   description:
     "Portfolio of Daniel Purnomo — Information Systems student & Software Engineer. Fullstack web development, AI/ML, and system architecture.",
 };
