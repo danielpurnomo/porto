@@ -34,6 +34,32 @@ const languageColors: Record<string, string> = {
   SQL: "#e38c00",
 };
 
+// Repos hidden from the portfolio grid (experiments, coursework scratch repos)
+const EXCLUDED_REPOS = new Set(["cobacoba", "ini-tugas"]);
+
+// Fallback descriptions when the GitHub API returns a null/empty description
+const descriptionFallbacks: Record<string, string> = {
+  "ambatysm-backend":
+    "Laravel RESTful API backend for the Ambatysm e-commerce web and mobile platform.",
+  porto: "Personal developer portfolio website built with Next.js, TypeScript, and Tailwind CSS.",
+  "Kyassha-Frontend":
+    "Cross-platform mobile cashier application built with Flutter.",
+  "Kyassha-Backend":
+    "RESTful API backend service for the Kyassha POS/cashier system.",
+  "real-time-SIBI-sign-language-translator":
+    "Real-time Indonesian Sign Language (SIBI) translator using MediaPipe hand-landmark extraction and LSTM neural networks.",
+  "frontend-pmob":
+    "Cross-platform mobile e-commerce application for Ambatysm built with Flutter and integrated with Laravel REST API.",
+};
+
+const GENERIC_DESCRIPTION = "Explore the repository on GitHub for details.";
+
+function getRepoDescription(repo: Repo): string {
+  const fallback = descriptionFallbacks[repo.name];
+  if (fallback) return repo.description?.trim() || fallback;
+  return repo.description?.trim() || GENERIC_DESCRIPTION;
+}
+
 const calendarTheme = {
   light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
   dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
@@ -59,7 +85,7 @@ function RepoCard({ repo, index }: { repo: Repo; index: number }) {
         {repo.name}
       </h3>
       <p className="mt-2 flex-1 text-xs leading-relaxed text-zinc-400">
-        {repo.description ?? "No description provided."}
+        {getRepoDescription(repo)}
       </p>
 
       <div className="mt-4 flex items-center gap-4 text-xs text-zinc-400">
@@ -94,7 +120,7 @@ export default function GitHubActivity() {
     (async () => {
       try {
         const res = await fetch(
-          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`,
+          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
           {
             signal: controller.signal,
             headers: { Accept: "application/vnd.github+json" },
@@ -102,8 +128,11 @@ export default function GitHubActivity() {
         );
         if (!res.ok) return; // keep fallback data (rate-limits, bad username)
         const data: Repo[] = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setRepos(data);
+        const filtered = data.filter(
+          (repo) => !EXCLUDED_REPOS.has(repo.name.toLowerCase())
+        );
+        if (filtered.length > 0) {
+          setRepos(filtered);
           setIsFallback(false);
         }
       } catch {

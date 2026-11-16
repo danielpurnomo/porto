@@ -56,7 +56,7 @@ export default function Footer() {
             <a
               key={s.label}
               href={s.href}
-              target="_blank"
+              target={s.href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-zinc-300 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-emerald-500/40 hover:text-emerald-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.18)]"
             >

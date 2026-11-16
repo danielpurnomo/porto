@@ -44,15 +44,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right: status + CTA */}
-        <div className="hidden items-center gap-3 md:flex">
-          <span className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-300">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Ready to Deploy
-          </span>
+        {/* Right: CTA */}
+        <div className="hidden md:flex">
           <a
             href="#contact"
             className={cn(
@@ -104,13 +97,6 @@ export default function Navbar() {
                 <Briefcase className="h-4 w-4" />
                 Hire Me
               </a>
-              <span className="mt-2 flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                </span>
-                Ready to Deploy
-              </span>
             </div>
           </motion.div>
         )}

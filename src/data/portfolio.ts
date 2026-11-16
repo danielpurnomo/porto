@@ -26,12 +26,20 @@ export interface TechItem {
     | "zap";
 }
 
+export interface RepoLink {
+  label: string;
+  href: string;
+}
+
 export interface Project {
   title: string;
   description: string;
   tech: string[];
-  repoUrl: string;
-  liveUrl?: string;
+  repoUrl?: string;
+  repoLinks?: RepoLink[]; // multiple GitHub repos (e.g. backend + mobile)
+  demoUrl?: string; // external live demo link
+  demoBadge?: string; // small status label, e.g. "Beta" / "In Progress"
+  figmaUrl?: string; // external Figma prototype link
   featured?: boolean;
   accent: "emerald" | "cyan" | "indigo" | "violet";
 }
@@ -41,6 +49,7 @@ export interface Certification {
   issuer: string;
   issuedDate: string;
   skills: string[];
+  status?: string; // badge label, defaults to "Verified"
   verifyUrl: string;
   pdfUrl: string; // put PDFs in /public/certificates/*.pdf
 }
@@ -63,16 +72,16 @@ export const profile = {
   subtitle:
     "An Information Systems student & Software Engineer who turns coffee into scalable code. Passionate about fullstack web development, AI/ML, and system architecture.",
   location: "UNAIR, Surabaya",
-  email: "hello@danielpurnomo.dev",
-  cvUrl: "/daniel-purnomo-cv.pdf", // drop your CV into /public
+  email: "purnomodan@gmail.com",
+  cvUrl: "/CV-Daniel-Purnomo.pdf", // drop your CV into /public
   tagline: "I don't just write code; I build solutions.",
 };
 
 export const socials: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/danielpurnomo" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/danielpurnomo" },
-  { label: "Email", href: "mailto:hello@danielpurnomo.dev" },
-  { label: "Instagram", href: "https://www.instagram.com/danielpurnomo" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/daniel-purnomo-197a70321" },
+  { label: "Email", href: "mailto:purnomodan@gmail.com" },
+  { label: "Instagram", href: "https://instagram.com/danielpurnomo_" },
 ];
 
 /* ----------------------------- GitHub configuration --------------------------- */
@@ -81,57 +90,57 @@ export const GITHUB_USERNAME = "danielpurnomo"; // <-- change to your real usern
 
 export const fallbackRepos: FallbackRepo[] = [
   {
-    name: "ReqLint",
+    name: "ambatysm-backend",
     description:
-      "NLP-powered requirement analyzer for user stories evaluating ISO 29148 & INVEST criteria.",
-    language: "TypeScript",
-    stargazers_count: 12,
-    forks_count: 3,
-    html_url: "https://github.com/danielpurnomo/reqlint",
-  },
-  {
-    name: "ambatysm-admin",
-    description:
-      "Vue.js admin dashboard for the Ambatysm clothing brand e-commerce platform.",
-    language: "Vue",
-    stargazers_count: 8,
-    forks_count: 2,
-    html_url: "https://github.com/danielpurnomo/ambatysm-admin",
-  },
-  {
-    name: "lastbite-platform",
-    description:
-      "Food-waste reduction startup platform connecting Surabaya students with discounted near-expiry meals.",
+      "Laravel RESTful API backend for the Ambatysm e-commerce web and mobile platform.",
     language: "PHP",
-    stargazers_count: 21,
-    forks_count: 5,
-    html_url: "https://github.com/danielpurnomo/lastbite-platform",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: "https://github.com/danielpurnomo/ambatysm-backend",
   },
   {
-    name: "realtime-sibi-translator",
+    name: "porto",
     description:
-      "Computer vision sign language translation system using MediaPipe & LSTM for public services.",
-    language: "Python",
-    stargazers_count: 34,
-    forks_count: 9,
-    html_url: "https://github.com/danielpurnomo/sibi-translator",
-  },
-  {
-    name: "flutter-ambatysm-client",
-    description:
-      "Flutter mobile client for Ambatysm — clean architecture, Riverpod state management.",
-    language: "Dart",
-    stargazers_count: 6,
-    forks_count: 1,
-    html_url: "https://github.com/danielpurnomo/ambatysm-flutter",
-  },
-  {
-    name: "portfolio-next",
-    description: "This portfolio — Next.js 15, Tailwind CSS v4, Framer Motion.",
+      "Personal developer portfolio website built with Next.js, TypeScript, and Tailwind CSS.",
     language: "TypeScript",
-    stargazers_count: 15,
-    forks_count: 4,
-    html_url: "https://github.com/danielpurnomo",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: "https://github.com/danielpurnomo/porto",
+  },
+  {
+    name: "Kyassha-Frontend",
+    description: "Cross-platform mobile cashier application built with Flutter.",
+    language: "Dart",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: "https://github.com/danielpurnomo/Kyassha-Frontend",
+  },
+  {
+    name: "Kyassha-Backend",
+    description: "RESTful API backend service for the Kyassha POS/cashier system.",
+    language: "PHP",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: "https://github.com/danielpurnomo/Kyassha-Backend",
+  },
+  {
+    name: "real-time-SIBI-sign-language-translator",
+    description:
+      "Real-time Indonesian Sign Language (SIBI) translator using MediaPipe hand-landmark extraction and LSTM neural networks.",
+    language: "Python",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url:
+      "https://github.com/danielpurnomo/real-time-SIBI-sign-language-translator",
+  },
+  {
+    name: "frontend-pmob",
+    description:
+      "Cross-platform mobile e-commerce application for Ambatysm built with Flutter and integrated with Laravel REST API.",
+    language: "Dart",
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: "https://github.com/danielpurnomo/frontend-pmob",
   },
 ];
 
@@ -143,9 +152,11 @@ export const techStack: TechItem[] = [
   { name: "Flutter", category: "Mobile", icon: "smartphone" },
   { name: "TypeScript", category: "Language", icon: "file-code" },
   { name: "Tailwind CSS", category: "Styling", icon: "wind" },
+  { name: "Figma", category: "UI / UX", icon: "app-window" },
   { name: "Laravel", category: "Backend", icon: "boxes" },
   { name: "Python", category: "Language", icon: "terminal" },
   { name: "PyTorch / Scikit-Learn", category: "AI / ML", icon: "brain" },
+  { name: "TensorFlow / Keras", category: "AI / ML", icon: "brain" },
   { name: "PostgreSQL", category: "Database", icon: "database" },
   { name: "MySQL", category: "Database", icon: "hard-drive" },
   { name: "Supabase", category: "BaaS", icon: "zap" },
@@ -155,40 +166,51 @@ export const techStack: TechItem[] = [
 
 export const projects: Project[] = [
   {
-    title: "ReqLint",
+    title: "ReqLint — Automated Agile User Story Quality Analyzer",
     description:
-      "An NLP-powered requirement analyzer that lints user stories against ISO 29148 quality standards and INVEST criteria. Features automated quality scoring, PostgreSQL-backed storage, and BDD (Gherkin) integration so product teams catch ambiguous requirements before they reach the sprint board.",
-    tech: ["Python", "NLP", "PostgreSQL", "BDD / Gherkin", "FastAPI"],
+      "Hybrid rule-based NLP and machine learning pipeline to automatically evaluate and score agile user stories against 6 INVEST quality criteria, integrated with a Laravel web interface for actionable feedback and automated rewrite recommendations.",
+    tech: ["Python", "NLP", "Scikit-Learn", "Laravel", "RESTful API"],
     repoUrl: "https://github.com/danielpurnomo/reqlint",
-    liveUrl: "#",
+    demoUrl: "http://reqlint.caiis.ai.id/",
+    demoBadge: "In Progress",
     featured: true,
     accent: "emerald",
   },
   {
-    title: "Ambatysm",
+    title: "Ambatysm — Full-Stack E-Commerce Web & Mobile Platform",
     description:
-      "A fullstack e-commerce platform for a clothing brand. Ships with a Vue.js admin dashboard for inventory & order management, a Flutter mobile client built on clean architecture, and a Laravel RESTful API with JWT auth, payment gateway integration, and catalog search.",
-    tech: ["Vue.js", "Flutter", "Laravel", "MySQL", "REST API"],
-    repoUrl: "https://github.com/danielpurnomo/ambatysm",
+      "End-to-end e-commerce platform for a clothing brand supporting a Vue.js web storefront and cross-platform Flutter mobile app powered by a unified Laravel RESTful API backend and MySQL.",
+    tech: ["Laravel", "Vue.js", "Flutter", "MySQL", "REST API"],
+    repoLinks: [
+      {
+        label: "Backend (Laravel)",
+        href: "https://github.com/danielpurnomo/ambatysm-backend",
+      },
+      {
+        label: "Mobile (Flutter)",
+        href: "https://github.com/danielpurnomo/frontend-pmob",
+      },
+    ],
     featured: true,
     accent: "cyan",
   },
   {
-    title: "LastBite",
+    title: "Wisata Batik Okra — Operational Management System & UI/UX Redesign",
     description:
-      "A food-waste reduction startup platform connecting university students in Surabaya with discounted near-expiry meals from local merchants. Partners with campus food merchants to rescue surplus food — real-time deal matching, merchant dashboards, and impact analytics.",
-    tech: ["Next.js", "Laravel", "PostgreSQL", "Tailwind CSS"],
-    repoUrl: "https://github.com/danielpurnomo/lastbite",
-    liveUrl: "#",
+      "Stakeholder requirements gathering, current-to-future state user journey mapping, and high-fidelity interactive Figma prototypes to digitize booking, inventory, and visitor operations for a cultural tourism enterprise in Surabaya.",
+    tech: ["Figma", "System Analysis", "UI/UX Design", "User Journey Mapping"],
+    figmaUrl:
+      "https://www.figma.com/design/szZz2Y4QwcMMkvLvsZq43D/Wisata-Batik-Okra?node-id=6233-3273&p=f&t=wcjHTHG9TPTL1G4t-0",
     featured: true,
     accent: "indigo",
   },
   {
-    title: "Real-Time SIBI Translator",
+    title: "Real-Time SIBI Sign Language Translator (Gemastik 2026)",
     description:
-      "A computer vision sign language (SIBI) translation system using MediaPipe landmarks and an LSTM sequence model, aimed at improving accessibility in public service windows. All preprocessing runs on-device with importable Keras inference for sub-second latency.",
-    tech: ["Python", "MediaPipe", "LSTM / Keras", "OpenCV"],
-    repoUrl: "https://github.com/danielpurnomo/sibi-translator",
+      "Real-time computer vision pipeline using MediaPipe hand-landmark extraction and LSTM neural networks to translate Indonesian Sign Language (SIBI) for public service accessibility at Dukcapil counters.",
+    tech: ["Python", "MediaPipe", "TensorFlow/Keras", "LSTM", "Computer Vision"],
+    repoUrl: "https://github.com/danielpurnomo/real-time-SIBI-sign-language-translator",
+    featured: true,
     accent: "violet",
   },
 ];
@@ -197,35 +219,54 @@ export const projects: Project[] = [
 
 export const certifications: Certification[] = [
   {
-    title: "Belajar Fundamental Front-End Web Development",
-    issuer: "Dicoding Indonesia",
-    issuedDate: "Jun 2024",
-    skills: ["HTML", "CSS", "JavaScript", "Web Accessibility"],
-    verifyUrl: "https://www.dicoding.com/", // replace with your real certificate URL
-    pdfUrl: "/certificates/fundamental-frontend.pdf",
+    title: "Certified Junior Web Programmer",
+    issuer:
+      "BNSP / LSP Universitas Airlangga (Reg. No. J.346 00248 2026)",
+    issuedDate: "Nov 2026",
+    skills: ["Web Development", "Laravel", "PHP", "REST API", "BNSP Certified"],
+    verifyUrl: "#", // replace with your real verification URL
+    pdfUrl: "/certificates/Sertifikat-Daniel-Purnomo.pdf",
   },
   {
-    title: "Menjadi Front-End Web Developer Expert",
-    issuer: "Dicoding Indonesia",
-    issuedDate: "Nov 2024",
-    skills: ["SPA", "PWA", "Build Automation", "Testing"],
-    verifyUrl: "https://www.dicoding.com/",
-    pdfUrl: "/certificates/frontend-expert.pdf",
+    title: "Samsung Innovation Campus (SIC) Batch 7",
+    issuer: "Samsung Electronics Indonesia",
+    issuedDate: "2026",
+    skills: ["Python", "AI & Machine Learning", "IoT", "Coding Bootcamp"],
+    verifyUrl: "#",
+    pdfUrl: "#",
   },
   {
-    title: "Machine Learning Terapan",
-    issuer: "Dicoding Indonesia",
-    issuedDate: "Mar 2025",
-    skills: ["Machine Learning", "Time Series", "NLP", "Deployment"],
-    verifyUrl: "https://www.dicoding.com/",
-    pdfUrl: "/certificates/applied-ml.pdf",
+    title: "Top 10 Finalist — Innovation Case Competition",
+    issuer: "Campus Data Week",
+    issuedDate: "2026",
+    skills: ["Data Analytics", "Business Case", "Problem Solving", "Innovation"],
+    verifyUrl: "#",
+    pdfUrl: "#",
   },
   {
-    title: "Belajar Structured Query Language (SQL)",
-    issuer: "Dicoding Indonesia",
-    issuedDate: "Jan 2024",
-    skills: ["SQL", "PostgreSQL", "Data Modeling", "Query Optimization"],
-    verifyUrl: "https://www.dicoding.com/",
-    pdfUrl: "/certificates/sql.pdf",
+    title: "Data Science & Software Engineering Competitions",
+    issuer: "UNPAD Hackathon & IPB GammaFest Data Science",
+    issuedDate: "2026",
+    skills: ["Hackathon", "Data Science", "Machine Learning", "Rapid Prototyping"],
+    verifyUrl: "#",
+    pdfUrl: "#",
+  },
+  {
+    title: "Data Science Competition — ARA 7.0 ITS",
+    issuer: "Institut Teknologi Sepuluh Nopember (ITS)",
+    issuedDate: "2026",
+    skills: ["Data Science", "Machine Learning", "Python", "Data Analytics"],
+    status: "Participant",
+    verifyUrl: "#",
+    pdfUrl: "#",
+  },
+  {
+    title: "Top 5 Finalist — National Business Case Competition 2026",
+    issuer: "National Business Case Competition",
+    issuedDate: "Nov 2026",
+    skills: ["Business Case", "Strategic Analysis", "Problem Solving", "Pitching"],
+    status: "Finalist · Ongoing",
+    verifyUrl: "#",
+    pdfUrl: "#",
   },
 ];
